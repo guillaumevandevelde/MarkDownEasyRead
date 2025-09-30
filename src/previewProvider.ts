@@ -131,7 +131,7 @@ export class PreviewProvider implements vscode.CustomTextEditorProvider {
 		}
 
 		const content = this.activeDocument.getText();
-		const html = this.markdownRenderer.render(content, this.activeDocument.uri);
+		const html = this.markdownRenderer.render(content, this.activeDocument.uri, this.activeWebview);
 		const zoom = this.preferenceManager.getZoomLevel();
 
 		this.activeWebview.postMessage({

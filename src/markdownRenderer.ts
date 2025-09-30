@@ -18,12 +18,13 @@ export class MarkdownRenderer {
 	 * Render markdown content to HTML
 	 * @param content Markdown source text
 	 * @param documentUri URI of the source document (for resolving relative paths)
+	 * @param webview Webview instance for converting URIs
 	 * @returns Rendered HTML string
 	 */
-	public render(content: string, documentUri: vscode.Uri): string {
+	public render(content: string, documentUri: vscode.Uri, webview: vscode.Webview): string {
 		try {
 			let html = this.md.render(content);
-			html = this.resolveImagePaths(html, documentUri);
+			html = this.resolveImagePaths(html, documentUri, webview);
 			return html;
 		} catch (error) {
 			console.error('Markdown rendering error:', error);
@@ -32,12 +33,13 @@ export class MarkdownRenderer {
 	}
 
 	/**
-	 * Resolve relative image paths to absolute file URIs
+	 * Resolve relative image paths to webview URIs
 	 * @param html Rendered HTML
 	 * @param documentUri Source document URI
+	 * @param webview Webview instance
 	 * @returns HTML with resolved image paths
 	 */
-	private resolveImagePaths(html: string, documentUri: vscode.Uri): string {
+	private resolveImagePaths(html: string, documentUri: vscode.Uri, webview: vscode.Webview): string {
 		const documentDir = path.dirname(documentUri.fsPath);
 
 		return html.replace(
@@ -56,7 +58,7 @@ export class MarkdownRenderer {
 				// Resolve relative paths
 				const absolutePath = path.resolve(documentDir, src);
 				const fileUri = vscode.Uri.file(absolutePath);
-				const webviewUri = fileUri.toString().replace('file:///', 'vscode-resource:/');
+				const webviewUri = webview.asWebviewUri(fileUri).toString();
 
 				return `<img${before}src="${webviewUri}"${after} onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\\"image-error\\">Image not found: ${path.basename(src)}</div>');">`;
 			}
