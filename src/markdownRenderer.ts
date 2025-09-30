@@ -55,12 +55,24 @@ export class MarkdownRenderer {
 					return match;
 				}
 
-				// Resolve relative paths
-				const absolutePath = path.resolve(documentDir, src);
-				const fileUri = vscode.Uri.file(absolutePath);
-				const webviewUri = webview.asWebviewUri(fileUri).toString();
+				// Parse the src to separate path from query string
+				const srcUrl = new URL(src, 'file:///dummy');
+				const cleanPath = srcUrl.pathname.replace(/^\//, ''); // Remove leading slash from pathname
+				const queryString = srcUrl.search; // Includes the '?'
 
-				return `<img${before}src="${webviewUri}"${after} onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\\"image-error\\">Image not found: ${path.basename(src)}</div>');">`;
+				// Resolve relative paths (without query string)
+				const absolutePath = path.resolve(documentDir, cleanPath);
+				const fileUri = vscode.Uri.file(absolutePath);
+				const webviewUri = webview.asWebviewUri(fileUri);
+
+				// Reconstruct with query string if present
+				const finalUri = queryString ? `${webviewUri.toString()}${queryString}` : webviewUri.toString();
+
+				// Extract just the filename for error message (without query string)
+				const basename = path.basename(cleanPath);
+				const errorMsg = `Image not found: ${basename}`.replace(/'/g, '&apos;');
+
+				return `<img${before}src="${finalUri}"${after} onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '&lt;div class=&quot;image-error&quot;&gt;${errorMsg}&lt;/div&gt;');">`;
 			}
 		);
 	}
