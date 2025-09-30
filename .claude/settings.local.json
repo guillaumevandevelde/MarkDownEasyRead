@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__read_file",
+      "mcp__serena__list_dir",
+      "Bash(powershell.exe:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npm run compile:*)",
+      "mcp__serena__replace_regex",
+      "Bash(git add:*)",
+      "Bash(git reset:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

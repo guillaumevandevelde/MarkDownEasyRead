@@ -1,0 +1,96 @@
+{
+  "name": "markdown-easy-read",
+  "displayName": "Markdown Easy Read",
+  "description": "Reader-optimized markdown preview with zoom controls and responsive layout",
+  "version": "1.0.0",
+  "publisher": "your-publisher-name",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:markdownEasyRead.openPreview",
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "markdownEasyRead.openPreview",
+        "title": "Open Markdown Easy Read"
+      },
+      {
+        "command": "markdownEasyRead.zoomIn",
+        "title": "Markdown Easy Read: Zoom In"
+      },
+      {
+        "command": "markdownEasyRead.zoomOut",
+        "title": "Markdown Easy Read: Zoom Out"
+      },
+      {
+        "command": "markdownEasyRead.resetZoom",
+        "title": "Markdown Easy Read: Reset Zoom"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "markdownEasyRead.zoomIn",
+        "key": "ctrl+=",
+        "mac": "cmd+=",
+        "when": "activeWebviewPanelId == 'markdownEasyRead.preview'"
+      },
+      {
+        "command": "markdownEasyRead.zoomOut",
+        "key": "ctrl+-",
+        "mac": "cmd+-",
+        "when": "activeWebviewPanelId == 'markdownEasyRead.preview'"
+      },
+      {
+        "command": "markdownEasyRead.resetZoom",
+        "key": "ctrl+0",
+        "mac": "cmd+0",
+        "when": "activeWebviewPanelId == 'markdownEasyRead.preview'"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "markdownEasyRead.preview",
+        "displayName": "Markdown Easy Read",
+        "selector": [
+          {
+            "filenamePattern": "*.md"
+          }
+        ],
+        "priority": "option"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/glob": "^9.0.0",
+    "@types/markdown-it": "^13.0.7",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vscode/test-electron": "^2.3.8",
+    "esbuild": "^0.19.11",
+    "eslint": "^8.56.0",
+    "glob": "^11.0.3",
+    "mocha": "^10.2.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "markdown-it": "^14.0.0"
+  }
+}
