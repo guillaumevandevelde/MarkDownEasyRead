@@ -8,6 +8,8 @@ All notable changes to the "Markdown Easy Read" extension will be documented in 
 
 #### Core Features
 - Reader-optimized markdown preview with comfortable typography
+- Research-based font stack for optimal readability (system fonts: Segoe UI, SF Pro Text, system-ui)
+- Enhanced text rendering with anti-aliasing and optimized legibility
 - Zoom controls with keyboard shortcuts (Ctrl/Cmd +, -, 0)
 - UI zoom buttons in preview panel
 - Global zoom preference persistence across VS Code restarts
@@ -17,10 +19,10 @@ All notable changes to the "Markdown Easy Read" extension will be documented in 
 
 #### Markdown Support
 - Full markdown rendering using markdown-it
-- Code blocks with syntax highlighting structure
+- Code blocks with syntax highlighting structure and optimized monospace fonts
 - Tables with horizontal scrolling
-- Images with relative path resolution
-- Image error handling with placeholder display
+- Images with relative path resolution and query parameter support
+- Image error handling with proper HTML escaping
 - Blockquotes, lists, links, inline code
 - Malformed markdown graceful handling
 

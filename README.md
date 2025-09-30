@@ -5,13 +5,15 @@ A VS Code extension that provides a reader-optimized markdown preview with zoom 
 ## Features
 
 - **Reader-Optimized Preview**: Comfortable typography with optimized padding, margins, and line spacing
+- **Research-Based Font Stack**: Uses system fonts proven for optimal readability (Segoe UI, SF Pro Text, system-ui)
+- **Enhanced Text Rendering**: Anti-aliasing and optimized legibility for comfortable reading
 - **Zoom Controls**: Adjust font size with keyboard shortcuts or UI buttons
 - **Persistent Preferences**: Zoom level persists across VS Code sessions
 - **Theme Integration**: Automatically adapts to VS Code's light/dark theme
 - **Live Updates**: Preview updates in real-time as you edit (200ms debounce)
 - **Responsive Layout**: Adapts to narrow and wide panel widths
 - **Smart Content Handling**: Text wraps, tables scroll horizontally
-- **Image Support**: Displays images with graceful error handling
+- **Image Support**: Displays images with graceful error handling, including query parameters
 
 ## Usage
 

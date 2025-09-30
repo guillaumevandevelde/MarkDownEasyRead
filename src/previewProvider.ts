@@ -206,13 +206,21 @@ export class PreviewProvider implements vscode.CustomTextEditorProvider {
 		}
 
 		body {
-			font-family: var(--vscode-editor-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif);
-			font-size: calc(var(--vscode-editor-font-size, 14px) * var(--zoom-level));
+			/* Optimized readable font stack based on research:
+			   - System fonts render best on each platform
+			   - Sans-serif proven better for screen reading
+			   - High-quality fallback chain for cross-platform consistency */
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Text', system-ui, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+			font-size: calc(16px * var(--zoom-level));
 			line-height: 1.6;
 			color: var(--vscode-editor-foreground);
 			background-color: var(--vscode-editor-background);
 			padding: 0;
 			margin: 0;
+			/* Improved text rendering for better readability */
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			text-rendering: optimizeLegibility;
 		}
 
 		.container {
@@ -279,7 +287,8 @@ export class PreviewProvider implements vscode.CustomTextEditorProvider {
 			background: var(--vscode-textCodeBlock-background);
 			padding: 0.2em 0.4em;
 			border-radius: 3px;
-			font-family: var(--vscode-editor-font-family, monospace);
+			/* Use monospace for code, respecting VS Code editor font first */
+			font-family: var(--vscode-editor-font-family, 'SF Mono', 'Consolas', 'Monaco', 'Menlo', 'Courier New', monospace);
 		}
 
 		#content pre {
