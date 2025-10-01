@@ -3,13 +3,29 @@
   "displayName": "Markdown Easy Read",
   "description": "Reader-optimized markdown preview with zoom controls and responsive layout",
   "version": "1.0.0",
-  "publisher": "your-publisher-name",
+  "publisher": "vdvguillaume",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "markdown",
+    "preview",
+    "reader",
+    "zoom",
+    "typography"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdvguillaume/MarkDownEasyRead.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vdvguillaume/MarkDownEasyRead/issues"
+  },
+  "license": "MIT",
   "activationEvents": [
     "onCommand:markdownEasyRead.openPreview",
     "onLanguage:markdown"
