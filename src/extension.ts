@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { PreviewProvider } from './previewProvider';
 import { PreferenceManager } from './preferenceManager';
 import { MarkdownRenderer } from './markdownRenderer';
+import { ContextMenuHandler } from './contextMenuHandler';
 
 let previewProvider: PreviewProvider | undefined;
 
@@ -11,6 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Initialize core components
 	const preferenceManager = new PreferenceManager(context);
 	const markdownRenderer = new MarkdownRenderer();
+	const contextMenuHandler = new ContextMenuHandler();
 
 	// Initialize preview provider
 	previewProvider = new PreviewProvider(context, preferenceManager, markdownRenderer);
@@ -68,10 +70,18 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
+	const openPreviewFromExplorerCommand = vscode.commands.registerCommand(
+		'markdownEasyRead.openPreviewFromExplorer',
+		async (uri: vscode.Uri) => {
+			await contextMenuHandler.openPreviewInPreferredLocation(uri);
+		}
+	);
+
 	// Add all disposables to context
 	context.subscriptions.push(
 		providerRegistration,
 		openPreviewCommand,
+		openPreviewFromExplorerCommand,
 		zoomInCommand,
 		zoomOutCommand,
 		resetZoomCommand

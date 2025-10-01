@@ -1,9 +1,10 @@
 # Markdown Easy Read
 
-A VS Code extension that provides a reader-optimized markdown preview with zoom controls and responsive layout.
+A VS Code extension that provides a reader-optimized markdown preview with zoom controls, syntax highlighting, and responsive layout.
 
 ## Features
 
+### Reading Experience
 - **Reader-Optimized Preview**: Comfortable typography with optimized padding, margins, and line spacing
 - **Research-Based Font Stack**: Uses system fonts proven for optimal readability (Segoe UI, SF Pro Text, system-ui)
 - **Enhanced Text Rendering**: Anti-aliasing and optimized legibility for comfortable reading
@@ -14,6 +15,19 @@ A VS Code extension that provides a reader-optimized markdown preview with zoom 
 - **Responsive Layout**: Adapts to narrow and wide panel widths
 - **Smart Content Handling**: Text wraps, tables scroll horizontally
 - **Image Support**: Displays images with graceful error handling, including query parameters
+
+### Code Display (New in 1.1.0)
+- **Syntax Highlighting**: Automatic syntax highlighting for 22+ programming languages
+- **Language Auto-Detection**: Automatically detects code language when not specified
+- **Line Numbers**: CSS-based line numbers for easy reference
+- **Copy Button**: One-click copy for all code blocks (copies without line numbers)
+- **Language Mismatch Warnings**: Alerts when explicit language tag differs from detected language
+- **Theme-Adaptive Colors**: Syntax colors adapt to VS Code light/dark themes
+
+### Quick Access (New in 1.1.0)
+- **Context Menu Integration**: Right-click any markdown file to open in Easy Read
+- **Multiple File Extensions**: Supports .md, .markdown, .mdown, .mkd, .mkdn, .mdwn, .text
+- **Configurable Preview Placement**: Choose how preview opens (replace, beside, default)
 
 ## Usage
 
@@ -50,8 +64,18 @@ The preview automatically adapts when you change VS Code themes:
 
 ## Extension Settings
 
-This extension stores:
+This extension provides the following settings:
+
 - `markdownEasyRead.zoomLevel`: Global zoom preference (0.5-3.0, default: 1.0)
+- `markdownEasyRead.previewPlacement`: How to open preview from context menu
+  - `default`: Use VS Code's default behavior (default)
+  - `replace`: Open in current editor (closes current file)
+  - `beside`: Open in new column (split view)
+
+## Supported Languages
+
+Syntax highlighting supports 22 programming languages:
+JavaScript, TypeScript, Python, Java, C#, HTML, CSS, JSON, Bash/Shell, SQL, Go, Rust, PHP, Ruby, Swift, Kotlin, C++, C, YAML, XML, Dockerfile, Markdown
 
 ## Known Issues
 
@@ -61,6 +85,15 @@ This extension stores:
 ## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md) for detailed release notes.
+
+### 1.1.0 (Latest)
+
+Enhanced code display and quick access:
+- Syntax highlighting for 22+ languages with auto-detection
+- Line numbers and copy buttons for code blocks
+- Language mismatch warnings
+- Context menu integration for quick preview access
+- Configurable preview placement setting
 
 ### 1.0.0
 

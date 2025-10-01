@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 
+export type PreviewPlacementPreference = 'replace' | 'beside' | 'default';
+
 export class PreferenceManager {
 	private static readonly ZOOM_KEY = 'markdownEasyRead.zoomLevel';
 	private static readonly DEFAULT_ZOOM = 1.0;
@@ -54,6 +56,23 @@ export class PreferenceManager {
 	 */
 	public async resetZoom(): Promise<void> {
 		await this.updateZoomLevel(PreferenceManager.DEFAULT_ZOOM);
+	}
+
+	/**
+	 * Get preview placement preference from VS Code configuration
+	 * @returns Preview placement preference
+	 */
+	public getPreviewPlacement(): PreviewPlacementPreference {
+		const config = vscode.workspace.getConfiguration('markdownEasyRead');
+		const placement = config.get<string>('previewPlacement', 'default');
+
+		// Validate and return preference
+		if (placement === 'replace' || placement === 'beside' || placement === 'default') {
+			return placement;
+		}
+
+		// Default to 'default' if invalid value
+		return 'default';
 	}
 
 	/**
