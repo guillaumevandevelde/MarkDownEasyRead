@@ -61,4 +61,67 @@ suite('ContextMenuHandler Contract Tests', () => {
     // (Can't test actual setting changes in unit test, but we verify the contract)
   });
 
+  // T001: Contract test for editor context menu command registration
+  test('Should register showEasyReadPreview command', async () => {
+    // Verify the command is registered in VS Code
+    const commands = await vscode.commands.getCommands(true);
+    assert.ok(
+      commands.includes('markdownEasyRead.showEasyReadPreview'),
+      'Command markdownEasyRead.showEasyReadPreview should be registered'
+    );
+  });
+
+  // T002: Contract test for command title
+  test('Should have correct command title', async () => {
+    // Load package.json to verify command declaration
+    const extension = vscode.extensions.getExtension('vdvguillaume.markdown-easy-read');
+    assert.ok(extension, 'Extension should be installed');
+
+    const packageJson = extension?.packageJSON;
+    assert.ok(packageJson, 'Extension should have package.json');
+
+    // Find the command in contributes.commands
+    const commands = packageJson.contributes?.commands || [];
+    const showPreviewCommand = commands.find((cmd: { command: string; title: string }) =>
+      cmd.command === 'markdownEasyRead.showEasyReadPreview'
+    );
+
+    assert.ok(showPreviewCommand, 'Command should be declared in package.json');
+    assert.strictEqual(
+      showPreviewCommand.title,
+      'Show Easy Read Preview',
+      'Command title should be exactly "Show Easy Read Preview"'
+    );
+  });
+
+  // T003: Contract test for menu contribution
+  test('Should contribute editor context menu', async () => {
+    // Load package.json to verify menu contribution
+    const extension = vscode.extensions.getExtension('vdvguillaume.markdown-easy-read');
+    assert.ok(extension, 'Extension should be installed');
+
+    const packageJson = extension?.packageJSON;
+    assert.ok(packageJson, 'Extension should have package.json');
+
+    // Check editor/context menu contribution
+    const menus = packageJson.contributes?.menus || {};
+    const editorContextMenu = menus['editor/context'] || [];
+
+    const menuItem = editorContextMenu.find((item: { command: string; when: string; icon?: string }) =>
+      item.command === 'markdownEasyRead.showEasyReadPreview'
+    );
+
+    assert.ok(menuItem, 'Menu item should be contributed to editor/context');
+    assert.strictEqual(
+      menuItem.when,
+      'editorLangId == markdown',
+      'Menu when clause should be "editorLangId == markdown"'
+    );
+    assert.strictEqual(
+      menuItem.icon,
+      undefined,
+      'Menu item should not have an icon (text-only)'
+    );
+  });
+
 });

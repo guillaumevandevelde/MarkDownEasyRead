@@ -33,11 +33,20 @@ A VS Code extension that provides a reader-optimized markdown preview with zoom 
 
 ### Opening Preview
 
+There are three ways to open the preview:
+
+**Method 1: Editor Context Menu (New!)**
+1. Open any markdown file (`.md`)
+2. Right-click anywhere in the document
+3. Select **"Show Easy Read Preview"**
+
+**Method 2: Command Palette**
 1. Open any markdown file (`.md`)
 2. Open Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
 3. Run command: **"Open Markdown Easy Read"**
 
-Or right-click on a markdown file and select **"Open With → Markdown Easy Read"**
+**Method 3: File Explorer**
+- Right-click on a markdown file in the explorer and select **"Open With → Markdown Easy Read"**
 
 ### Zoom Controls
 

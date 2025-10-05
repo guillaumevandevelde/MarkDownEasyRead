@@ -2,7 +2,7 @@
   "name": "markdown-easy-read",
   "displayName": "Markdown Easy Read",
   "description": "Reader-optimized markdown preview with zoom controls and responsive layout",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "vdvguillaume",
   "icon": "icon.png",
   "engines": {
@@ -48,8 +48,20 @@
       {
         "command": "markdownEasyRead.resetZoom",
         "title": "Markdown Easy Read: Reset Zoom"
+      },
+      {
+        "command": "markdownEasyRead.showEasyReadPreview",
+        "title": "Show Easy Read Preview"
       }
     ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "markdownEasyRead.showEasyReadPreview",
+          "when": "editorLangId == markdown"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "markdownEasyRead.zoomIn",
@@ -107,6 +119,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@types/highlight.js": "^9.12.4",
+    "highlight.js": "^11.11.1",
     "markdown-it": "^14.0.0"
   }
 }

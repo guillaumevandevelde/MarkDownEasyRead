@@ -351,6 +351,144 @@ export class PreviewProvider implements vscode.CustomTextEditorProvider {
 			border-radius: 4px;
 			margin: 1em 0;
 		}
+
+		/* Highlight.js Syntax Highlighting Theme (VS Code adapted) */
+		.hljs {
+			display: block;
+			overflow-x: auto;
+			color: var(--vscode-editor-foreground);
+		}
+
+		/* Comments */
+		.hljs-comment,
+		.hljs-quote {
+			color: var(--vscode-descriptionForeground);
+			font-style: italic;
+		}
+
+		/* Keywords, tags */
+		.hljs-keyword,
+		.hljs-selector-tag,
+		.hljs-tag,
+		.hljs-name {
+			color: #569cd6; /* Blue for keywords */
+		}
+
+		/* Strings */
+		.hljs-string,
+		.hljs-attr,
+		.hljs-selector-attr,
+		.hljs-selector-pseudo {
+			color: #ce9178; /* Orange/brown for strings */
+		}
+
+		/* Numbers */
+		.hljs-number,
+		.hljs-literal {
+			color: #b5cea8; /* Light green for numbers */
+		}
+
+		/* Functions */
+		.hljs-title,
+		.hljs-function,
+		.hljs-built_in {
+			color: #dcdcaa; /* Yellow for functions */
+		}
+
+		/* Types, classes */
+		.hljs-type,
+		.hljs-class,
+		.hljs-selector-class {
+			color: #4ec9b0; /* Cyan for types */
+		}
+
+		/* Variables, attributes */
+		.hljs-variable,
+		.hljs-template-variable,
+		.hljs-attribute {
+			color: #9cdcfe; /* Light blue for variables */
+		}
+
+		/* Operators, symbols */
+		.hljs-operator,
+		.hljs-symbol,
+		.hljs-bullet,
+		.hljs-link {
+			color: var(--vscode-editor-foreground);
+		}
+
+		/* Additions (diff) */
+		.hljs-addition {
+			color: #b5cea8;
+			background-color: rgba(181, 206, 168, 0.1);
+		}
+
+		/* Deletions (diff) */
+		.hljs-deletion {
+			color: #f48771;
+			background-color: rgba(244, 135, 113, 0.1);
+		}
+
+		/* Meta, doctags */
+		.hljs-meta,
+		.hljs-doctag {
+			color: #569cd6;
+		}
+
+		/* Sections, titles */
+		.hljs-section {
+			color: #dcdcaa;
+			font-weight: bold;
+		}
+
+		/* Emphasis */
+		.hljs-emphasis {
+			font-style: italic;
+		}
+
+		/* Strong */
+		.hljs-strong {
+			font-weight: bold;
+		}
+
+		/* Code block container with copy button */
+		.code-block-container {
+			position: relative;
+			margin: 1em 0;
+		}
+
+		.copy-button {
+			position: absolute;
+			top: 0.5rem;
+			right: 0.5rem;
+			background: var(--vscode-button-background);
+			color: var(--vscode-button-foreground);
+			border: none;
+			padding: 0.25rem 0.5rem;
+			cursor: pointer;
+			border-radius: 3px;
+			font-size: 12px;
+			opacity: 0.7;
+			transition: opacity 0.2s;
+			z-index: 10;
+		}
+
+		.copy-button:hover {
+			opacity: 1;
+			background: var(--vscode-button-hoverBackground);
+		}
+
+		.copy-icon {
+			display: inline-block;
+		}
+
+		.language-warning {
+			position: absolute;
+			top: 0.5rem;
+			left: 0.5rem;
+			font-size: 16px;
+			opacity: 0.7;
+		}
 	</style>
 </head>
 <body>
@@ -375,6 +513,7 @@ export class PreviewProvider implements vscode.CustomTextEditorProvider {
 				case 'update':
 					contentDiv.innerHTML = message.payload.html;
 					applyZoom(message.payload.zoom);
+					attachCopyButtons(); // Attach copy button handlers after content update
 					break;
 
 				case 'zoomChange':
@@ -402,6 +541,32 @@ export class PreviewProvider implements vscode.CustomTextEditorProvider {
 				payload: { delta: -0.1 }
 			});
 		});
+
+		// Attach copy button handlers to all code blocks
+		function attachCopyButtons() {
+			const copyButtons = document.querySelectorAll('.copy-button');
+			copyButtons.forEach(button => {
+				button.addEventListener('click', () => {
+					const codeBlock = button.parentElement.querySelector('code');
+					if (codeBlock) {
+						const code = codeBlock.textContent;
+						navigator.clipboard.writeText(code).then(() => {
+							// Show feedback
+							const icon = button.querySelector('.copy-icon');
+							const originalText = icon.textContent;
+							icon.textContent = '✓';
+							button.style.opacity = '1';
+							setTimeout(() => {
+								icon.textContent = originalText;
+								button.style.opacity = '0.7';
+							}, 2000);
+						}).catch(err => {
+							console.error('Failed to copy:', err);
+						});
+					}
+				});
+			});
+		}
 
 		// Notify extension that webview is ready
 		vscode.postMessage({ type: 'ready' });

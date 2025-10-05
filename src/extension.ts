@@ -77,11 +77,29 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
+	// T013-T016: Register editor context menu command
+	const showEasyReadPreviewCommand = vscode.commands.registerCommand(
+		'markdownEasyRead.showEasyReadPreview',
+		async () => {
+			// T014: Get active editor and validate
+			const editor = vscode.window.activeTextEditor;
+			if (!editor || editor.document.languageId !== 'markdown') {
+				// Silently fail - menu won't show for non-markdown files anyway
+				return;
+			}
+
+			// T014: Extract URI and open preview
+			const uri = editor.document.uri;
+			await vscode.commands.executeCommand('vscode.openWith', uri, 'markdownEasyRead.preview');
+		}
+	);
+
 	// Add all disposables to context
 	context.subscriptions.push(
 		providerRegistration,
 		openPreviewCommand,
 		openPreviewFromExplorerCommand,
+		showEasyReadPreviewCommand, // T015: Add disposable to subscriptions
 		zoomInCommand,
 		zoomOutCommand,
 		resetZoomCommand

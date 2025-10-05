@@ -2,6 +2,21 @@
 
 All notable changes to the "Markdown Easy Read" extension will be documented in this file.
 
+## [1.1.0] - 2025-10-05
+
+### Added
+- **Editor Context Menu**: Right-click within any markdown document to access "Show Easy Read Preview"
+- Automatic preview focus when menu option is selected while preview is already open (prevents duplicate previews)
+- Context menu appears only for markdown files (.md, .markdown, .mdown, .mkd, etc.)
+
+### Commands
+- `markdownEasyRead.showEasyReadPreview`: Show Easy Read Preview (available via editor context menu)
+
+### Technical
+- Added `editor/context` menu contribution with `editorLangId == markdown` visibility condition
+- Integration tests for menu visibility, preview opening, focus behavior, and error handling
+- Contract tests for command registration and menu contribution
+
 ## [1.0.0] - 2025-09-30
 
 ### Added
